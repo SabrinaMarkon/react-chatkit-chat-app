@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import MessageList from './components';
-import NewRoomForm from './components';
-import RoomList from './components';
-import SendMessageForm from './components';
+import MessageList from './components/MessageList';
+import NewRoomForm from './components/NewRoomForm';
+import RoomList from './components/RoomList';
+import SendMessageForm from './components/SendMessageForm';
 
 class App extends Component {
   render() {
