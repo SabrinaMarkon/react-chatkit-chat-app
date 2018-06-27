@@ -9,6 +9,13 @@ import { tokenUrl, instanceLocator } from './config'
 
 class App extends Component {
 
+  constructor() {
+    super();
+    this.state = {
+      messages: []
+    }
+  }
+
 /* How to hook up a React component with an API?
 With the ComponentDidMount Lifecycle method, which
 runs after the component is rendered. */
@@ -28,7 +35,10 @@ runs after the component is rendered. */
             messageLimit: 10, // default is 20 but can go up to 100
             hooks: {
               onNewMessage: message => {
-                console.log('message.text:', message.text);
+                // console.log('message.text:', message.text);
+                this.setState({
+                  messages: [...this.state.messages, message]
+                });
               }
             }
           });
@@ -40,7 +50,7 @@ runs after the component is rendered. */
     return (
       <div className="app">
         <RoomList />
-        <MessageList />
+        <MessageList message={this.state.messages} />
         <SendMessageForm />
         <NewRoomForm />
       </div>
