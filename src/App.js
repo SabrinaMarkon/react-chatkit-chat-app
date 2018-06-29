@@ -12,8 +12,11 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      messages: []
+      messages: [],
+      joinableRooms: [],
+      joinedRooms: []
     }
+    this.sendMessage = this.sendMessage.bind(this);
   }
 
 /* How to hook up a React component with an API?
@@ -30,7 +33,19 @@ runs after the component is rendered. */
 
     chatManager.connect()
       .then(currentUser => {
-          currentUser.subscribeToRoom({
+          /* take currentUser and hook onto the entire component (this) itself so it is accessible outside this scope */
+          this.currentUser = currentUser;
+
+          this.currentUser.getJoinableRooms()
+            .then(joinableRooms => {
+              this.setState({
+                joinableRooms,
+                joinedRooms: this.currentUser.rooms
+              });
+            })
+            .catch(err => console.log('Error on joinableRooms:', err));
+
+          this.currentUser.subscribeToRoom({
             roomId: 10403759,
             messageLimit: 10, // default is 20 but can go up to 100
             hooks: {
@@ -43,15 +58,23 @@ runs after the component is rendered. */
             }
           });
       })
+      .catch(err => console.log('Error on connect:', err));
+  }
 
+  sendMessage(text) {
+    /* get the currentUsera for the instance and call sendMessage on it */
+    this.currentUser.sendMessage({
+      text,
+      roomId: 10403759 
+    });
   }
 
   render() {
     return (
       <div className="app">
-        <RoomList />
+        <RoomList rooms={[...this.state.joinableRooms, ...this.state.joinedRooms]} />
         <MessageList message={this.state.messages} />
-        <SendMessageForm />
+        <SendMessageForm sendMessage={this.sendMessage} />
         <NewRoomForm />
       </div>
     );
