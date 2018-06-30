@@ -87,7 +87,7 @@ runs after the component is rendered. */
     })
     .then(room => {
       this.setState({
-        roomId: room
+        roomId: room.id
       });
       this.getRooms();
     } )
@@ -106,6 +106,7 @@ runs after the component is rendered. */
     return (
       <div className="app">
         <RoomList
+        roomId={this.state.roomId}
         subscribeToRoom={this.subscribeToRoom}
         rooms={[...this.state.joinableRooms, ...this.state.joinedRooms]} />
         <MessageList message={this.state.messages} />
