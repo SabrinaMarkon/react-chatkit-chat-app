@@ -20,6 +20,7 @@ class App extends Component {
     this.sendMessage = this.sendMessage.bind(this);
     this.subscribeToRoom = this.subscribeToRoom.bind(this);
     this.getRooms = this.getRooms.bind(this);
+    this.createRoom = this.createRoom.bind(this);
   }
 
 /* How to hook up a React component with an API?
@@ -41,19 +42,6 @@ runs after the component is rendered. */
           this.getRooms();
           // the user should now be able to click on a room name to subscribeToRoom.
           // this.subscribeToRoom();
-
-          this.currentUser.subscribeToRoom({
-            roomId: 10403759,
-            messageLimit: 10, // default is 20 but can go up to 100
-            hooks: {
-              onNewMessage: message => {
-                // console.log('message.text:', message.text);
-                this.setState({
-                  messages: [...this.state.messages, message]
-                });
-              }
-            }
-          })
       })
       .catch(err => console.log('Error on connect:', err));
   }
@@ -66,55 +54,63 @@ runs after the component is rendered. */
         joinedRooms: this.currentUser.rooms
       });
     })
-    .catch(err => console.log('Error on joinableRooms:', err));
+    .catch(err => {
+      console.log(`Error getting joinable rooms: ${err}`)
+    })
   }
 
-  subscribeToRoom(roomId) {
-    this.setState({
-      messages: []
-    });
-    this.currentUser.subscribeToRoom({
-      roomId: roomId,
-      messageLimit: 10, // default is 20 but can go up to 100
-      hooks: {
-        onNewMessage: message => {
-          // console.log('message.text:', message.text);
-          this.setState({
-            messages: [...this.state.messages, message]
-          });
-        }
-      }
-    })
-    .then(room => {
-      this.setState({
-        roomId: room.id
-      });
-      this.getRooms();
-    } )
-    .catch(err => console.log('Error on subscribing to room:', err));
-  }
+    subscribeToRoom(roomId) {
+      console.log(typeof roomId);
+      console.log(typeof this.state.roomId);
+      console.log(this.state.roomId);
+        this.setState({ messages: [] })
+        this.currentUser.subscribeToRoom({
+            roomId: roomId,
+            hooks: {
+                onNewMessage: message => {
+                    this.setState({
+                        messages: [...this.state.messages, message]
+                    })
+                }
+            }
+        })
+        .then(room => {
+            this.setState({
+                roomId: room.id
+            })
+            this.getRooms()
+        })
+        .catch(err => console.log('error on subscribing to room: ', err))
+    }
 
   sendMessage(text) {
-    /* get the currentUsera for the instance and call sendMessage on it */
-    this.currentUser.sendMessage({
-      text,
-      roomId: this.state.roomId
-    });
+    console.log(typeof this.state.roomId);
+    /* get the currentUser for the instance and call sendMessage on it */
+    if (this.state.roomId) {
+      this.currentUser.sendMessage({
+        text,
+        roomId: this.state.roomId
+      });
+    }
+  }
+
+  createRoom(roomName) {
+    console.log('roomName:' , roomName);
   }
 
   render() {
     return (
-      <div className="app">
-        <RoomList
-        roomId={this.state.roomId}
-        subscribeToRoom={this.subscribeToRoom}
-        rooms={[...this.state.joinableRooms, ...this.state.joinedRooms]} />
-        <MessageList message={this.state.messages} />
-        <SendMessageForm sendMessage={this.sendMessage} />
-        <NewRoomForm />
-      </div>
+        <div className="app">
+            <RoomList
+                subscribeToRoom={this.subscribeToRoom}
+                rooms={[...this.state.joinableRooms, ...this.state.joinedRooms]}
+                roomId={this.state.roomId} />
+            <MessageList message={this.state.messages} />
+            <SendMessageForm sendMessage={this.sendMessage} />
+            <NewRoomForm createRoom={this.createRoom} />
+        </div>
     );
-  }
+}
 }
 
-export default App;
+export default App
