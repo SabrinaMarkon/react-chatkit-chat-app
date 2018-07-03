@@ -53,6 +53,7 @@ runs after the component is rendered. */
         joinableRooms,
         joinedRooms: this.currentUser.rooms
       });
+      // console.log(this.state.roomId);
     })
     .catch(err => {
       console.log(`Error getting joinable rooms: ${err}`)
@@ -60,9 +61,9 @@ runs after the component is rendered. */
   }
 
     subscribeToRoom(roomId) {
-      console.log(typeof roomId);
-      console.log(typeof this.state.roomId);
-      console.log(this.state.roomId);
+      // console.log(typeof roomId);
+      // console.log(typeof this.state.roomId);
+      // console.log(this.state.roomId);
         this.setState({ messages: [] })
         this.currentUser.subscribeToRoom({
             roomId: roomId,
@@ -75,8 +76,9 @@ runs after the component is rendered. */
             }
         })
         .then(room => {
+          console.log(typeof roomId);
             this.setState({
-                roomId: room.id
+                roomId: roomId
             })
             this.getRooms()
         })
@@ -84,18 +86,24 @@ runs after the component is rendered. */
     }
 
   sendMessage(text) {
-    console.log(typeof this.state.roomId);
+    console.log(text);
+    console.log(this.state.roomId);
     /* get the currentUser for the instance and call sendMessage on it */
-    if (this.state.roomId) {
+    // if (this.state.roomId) {
       this.currentUser.sendMessage({
         text,
         roomId: this.state.roomId
       });
-    }
+    // }
   }
 
-  createRoom(roomName) {
-    console.log('roomName:' , roomName);
+  createRoom(name) {
+    // console.log('roomName:' , roomName);
+    this.currentUser.createRoom({
+      name
+    })
+    .then(room => this.subscribeToRoom(room.id))
+    .catch(err => console.log('error with createRoom: ', err))
   }
 
   render() {
