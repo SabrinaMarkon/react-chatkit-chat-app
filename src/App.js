@@ -61,9 +61,9 @@ runs after the component is rendered. */
   }
 
     subscribeToRoom(roomId) {
-      // console.log(typeof roomId);
-      // console.log(typeof this.state.roomId);
-      // console.log(this.state.roomId);
+      console.log(typeof roomId);
+      console.log(typeof this.state.roomId);
+      console.log(this.state.roomId);
         this.setState({ messages: [] })
         this.currentUser.subscribeToRoom({
             roomId: roomId,
