@@ -61,9 +61,9 @@ runs after the component is rendered. */
   }
 
     subscribeToRoom(roomId) {
-      console.log(typeof roomId);
-      console.log(typeof this.state.roomId);
-      console.log(this.state.roomId);
+      // console.log(typeof roomId);
+      // console.log(typeof this.state.roomId);
+      // console.log(this.state.roomId);
         this.setState({ messages: [] })
         this.currentUser.subscribeToRoom({
             roomId: roomId,
@@ -85,14 +85,14 @@ runs after the component is rendered. */
         .catch(err => console.log('error on subscribing to room: ', err))
     }
 
-  sendMessage(text) {
+  sendMessage(text, roomId) {
     console.log(text);
     console.log(this.state.roomId);
     /* get the currentUser for the instance and call sendMessage on it */
     // if (this.state.roomId) {
       this.currentUser.sendMessage({
         text,
-        roomId: this.state.roomId
+        roomId: roomId
       });
     // }
   }

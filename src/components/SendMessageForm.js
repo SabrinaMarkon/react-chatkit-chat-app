@@ -39,8 +39,9 @@ class SendMessageForm extends React.Component {
                 type="text" 
                 onChange={this.handleChange}
                 value={this.state.message} />
+                <button type="submit">Send</button>
             </form>
-            // No button because it needs to submit with enter key for a chat as user-expected behavior.
+            // No button because it needs to submit with enter key for a chat as user-expected behavior. Seems dumb. Should have it anyway.
         )
     }
 }
