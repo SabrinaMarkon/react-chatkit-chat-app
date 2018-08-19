@@ -53,7 +53,7 @@ runs after the component is rendered. */
         joinableRooms,
         joinedRooms: this.currentUser.rooms
       });
-      // console.log(this.state.roomId);
+      console.log(this.state.roomId + ' getRooms method');
     })
     .catch(err => {
       console.log(`Error getting joinable rooms: ${err}`)
@@ -64,25 +64,28 @@ runs after the component is rendered. */
       // console.log(typeof roomId);
       // console.log(typeof this.state.roomId);
       // console.log(this.state.roomId);
-        this.setState({ messages: [] })
-        this.currentUser.subscribeToRoom({
-            roomId: roomId,
-            hooks: {
-                onNewMessage: message => {
-                    this.setState({
-                        messages: [...this.state.messages, message]
-                    })
-                }
-            }
+        this.setState({ 
+          messages: [], 
+          roomId: roomId 
         })
-        .then(room => {
-          console.log(typeof roomId);
-            this.setState({
-                roomId: roomId
-            })
-            this.getRooms()
-        })
-        .catch(err => console.log('error on subscribing to room: ', err))
+        // this.currentUser.subscribeToRoom({
+        //     roomId: roomId,
+        //     hooks: {
+        //         onNewMessage: message => {
+        //             this.setState({
+        //                 messages: [...this.state.messages, message]
+        //             })
+        //         }
+        //     }
+        // })
+        // .then(room => {
+        //   console.log(typeof roomId);
+        //     this.setState({
+        //         roomId: roomId
+        //     })
+        //     this.getRooms()
+        // })
+        // .catch(err => console.log('error on subscribing to room: ', err))
     }
 
   sendMessage(text, roomId) {
@@ -114,7 +117,8 @@ runs after the component is rendered. */
                 rooms={[...this.state.joinableRooms, ...this.state.joinedRooms]}
                 roomId={this.state.roomId} />
             <MessageList message={this.state.messages} />
-            <SendMessageForm sendMessage={this.sendMessage} />
+            <SendMessageForm sendMessage={this.sendMessage}
+             />
             <NewRoomForm createRoom={this.createRoom} />
         </div>
     );
