@@ -19,7 +19,8 @@ class NewRoomForm extends React.Component {
 
     handleSubmit(e) {   
         e.preventDefault();
-        this.props.createRoom(this.state.roomName);
+        // console.log('handleSubmit: ' + this.state.roomName);
+        this.props.createRoom(e, this.state.roomName);
     }
 
     render() {
@@ -30,7 +31,7 @@ class NewRoomForm extends React.Component {
                         value={this.state.roomName}
                         onChange={this.handleChange}
                         type="text"
-                        placeholder="NewRoomForm"
+                        placeholder="Create New Room"
                         required />
                     <button id="create-room-btn" type="submit">+</button>
                 </form>

@@ -62,33 +62,34 @@ runs after the component is rendered. */
   }
 
     subscribeToRoom(e, roomId) {
-      e.preventDefault()
-      console.log(roomId);
-      console.log(typeof roomId);
-      console.log(typeof this.state.roomId);
-      console.log(this.state.roomId);
+        if(e) {
+          e.preventDefault();
+        }
         this.setState({ 
           messages: [], 
           roomId: roomId 
         })
-        // this.currentUser.subscribeToRoom({
-        //     roomId: roomId,
-        //     hooks: {
-        //         onNewMessage: message => {
-        //             this.setState({
-        //                 messages: [...this.state.messages, message],
-        //             })
-        //         }
-        //     }
-        // })
-        // .then(room => {
-        //   console.log(typeof roomId);
-        //     this.setState({
-        //         roomId: roomId
-        //     })
-        //     // this.getRooms(roomId)
-        // })
-        // .catch(err => console.log('error on subscribing to room: ', err))
+        // console.log(roomId);
+        // console.log(typeof roomId);
+        // console.log(typeof this.state.roomId)
+        this.currentUser.subscribeToRoom({
+            roomId: roomId,
+            hooks: {
+                onNewMessage: message => {
+                    this.setState({
+                        messages: [...this.state.messages, message],
+                    })
+                }
+            }
+        })
+        .then(room => {
+          // console.log(typeof roomId);aa
+            this.setState({
+                roomId: roomId
+            })
+            this.getRooms(roomId)
+        })
+        .catch(err => console.log('error on subscribing to room: ', err))
     }
 
   sendMessage(text, roomId) {
@@ -103,12 +104,12 @@ runs after the component is rendered. */
     // }
   }
 
-  createRoom(name) {
-    // console.log('roomName:' , roomName);
+  createRoom(e, name) {
+    // console.log('roomName:' , typeof(name));
     this.currentUser.createRoom({
       name
     })
-    .then(room => this.subscribeToRoom(room.id))
+    .then(room => this.subscribeToRoom(null, room.id))
     .catch(err => console.log('error with createRoom: ', err))
   }
 
