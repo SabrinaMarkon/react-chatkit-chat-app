@@ -39,31 +39,34 @@ runs after the component is rendered. */
       .then(currentUser => {
           /* take currentUser and hook onto the entire component (this) itself so it is accessible outside this scope */
           this.currentUser = currentUser;
-          this.getRooms();
+          this.getRooms(this.state.roomId);
           // the user should now be able to click on a room name to subscribeToRoom.
           // this.subscribeToRoom();
       })
       .catch(err => console.log('Error on connect:', err));
   }
 
-  getRooms() {
+  getRooms(roomId) {
     this.currentUser.getJoinableRooms()
     .then(joinableRooms => {
       this.setState({
         joinableRooms,
-        joinedRooms: this.currentUser.rooms
+        joinedRooms: this.currentUser.rooms,
+        roomId: roomId
       });
-      console.log(this.state.roomId + ' getRooms method');
+      // console.log(this.state.roomId + ' getRooms method');
     })
     .catch(err => {
       console.log(`Error getting joinable rooms: ${err}`)
     })
   }
 
-    subscribeToRoom(roomId) {
-      // console.log(typeof roomId);
-      // console.log(typeof this.state.roomId);
-      // console.log(this.state.roomId);
+    subscribeToRoom(e, roomId) {
+      e.preventDefault()
+      console.log(roomId);
+      console.log(typeof roomId);
+      console.log(typeof this.state.roomId);
+      console.log(this.state.roomId);
         this.setState({ 
           messages: [], 
           roomId: roomId 
@@ -73,7 +76,7 @@ runs after the component is rendered. */
         //     hooks: {
         //         onNewMessage: message => {
         //             this.setState({
-        //                 messages: [...this.state.messages, message]
+        //                 messages: [...this.state.messages, message],
         //             })
         //         }
         //     }
@@ -83,7 +86,7 @@ runs after the component is rendered. */
         //     this.setState({
         //         roomId: roomId
         //     })
-        //     this.getRooms()
+        //     // this.getRooms(roomId)
         // })
         // .catch(err => console.log('error on subscribing to room: ', err))
     }
