@@ -92,9 +92,9 @@ runs after the component is rendered. */
         .catch(err => console.log('error on subscribing to room: ', err))
     }
 
-  sendMessage(text, roomId) {
-    console.log(text);
-    console.log(this.state.roomId);
+  sendMessage(roomId, text) {
+    // console.log(text);
+    // console.log(roomId);
     /* get the currentUser for the instance and call sendMessage on it */
     // if (this.state.roomId) {
       this.currentUser.sendMessage({
@@ -122,6 +122,7 @@ runs after the component is rendered. */
                 roomId={this.state.roomId} />
             <MessageList message={this.state.messages} />
             <SendMessageForm sendMessage={this.sendMessage}
+                roomId={this.state.roomId}
              />
             <NewRoomForm createRoom={this.createRoom} />
         </div>
