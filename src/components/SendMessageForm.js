@@ -6,7 +6,8 @@ class SendMessageForm extends React.Component {
     constructor() {
         super();
         this.state = {
-            message: ''
+            message: '',
+            placeholder: 'Type your message and hit enter'
         }
         // bind to this.handleChange method
         this.handleChange = this.handleChange.bind(this);
@@ -24,10 +25,16 @@ class SendMessageForm extends React.Component {
         e.preventDefault();
         /** send off the message */
         // console.log(this.state.message);
-        this.props.sendMessage(this.props.roomId, this.state.message);
-        this.setState({
-            message: ''
-        });
+        if (this.props.roomId) {
+            this.props.sendMessage(this.props.roomId, this.state.message);
+            this.setState({
+                message: ''
+            });
+        } else {
+            this.setState({
+                placeholder: 'Click a room to subscribe first'
+            });
+        }
     }
 
     render() {
@@ -35,13 +42,13 @@ class SendMessageForm extends React.Component {
             <form className="send-message-form"
             onSubmit={this.handleSubmit}>
                 <input
-                placeholder="Type your message and hit enter" 
+                placeholder={this.state.placeholder}
                 type="text" 
                 onChange={this.handleChange}
                 value={this.state.message} />
                 <button type="submit">Send</button>
             </form>
-            // No button because it needs to submit with enter key for a chat as user-expected behavior. Seems dumb. Should have it anyway.
+            // User can submit either with button or enter key.
         )
     }
 }

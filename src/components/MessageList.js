@@ -13,7 +13,7 @@ class MessageList extends React.Component {
         clientHeight is the visible area (box)
         The extra 100 added on is if we are within 100px of the bottom already so it doesn't have to be EXACTLY at the bottom to drop down.
         */
-        this.shouldScrollToBottom = node.scrolltop + node.clientHeight + 100 >= node.scrollHeight
+        this.shouldScrollToBottom = node.scrolltop + node.clientHeight + 300 >= node.scrollHeight
 
     }
 
