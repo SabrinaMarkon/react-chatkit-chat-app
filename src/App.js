@@ -39,6 +39,9 @@ runs after the component is rendered. */
       .then(currentUser => {
           /* take currentUser and hook onto the entire component (this) itself so it is accessible outside this scope */
           this.currentUser = currentUser;
+          let usersonlineobj = this.currentUser.rooms[0].userIds;
+          let usersonline = Object.keys(usersonlineobj).length;
+          console.log(usersonline);
           this.getRooms(this.state.roomId);
           // the user should now be able to click on a room name to subscribeToRoom.
           // this.subscribeToRoom();
@@ -83,7 +86,7 @@ runs after the component is rendered. */
             }
         })
         .then(room => {
-          // console.log(typeof roomId);aa
+          // console.log(typeof roomId);
             this.setState({
                 roomId: roomId
             })
@@ -131,3 +134,14 @@ runs after the component is rendered. */
 }
 
 export default App
+
+/* Next:
+online users:
+this.currentUser.rooms[this.state.roomID].userIds;
+
+UI Avatars
+
+user typing indicators
+admin/moderator can delete rooms or messages
+user can delete/edit own messages
+*/
