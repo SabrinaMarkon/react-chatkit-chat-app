@@ -15,7 +15,8 @@ class App extends Component {
       roomId: null,
       messages: [],
       joinableRooms: [],
-      joinedRooms: []
+      joinedRooms: [],
+      usersonline: 0
     }
     this.sendMessage = this.sendMessage.bind(this);
     this.subscribeToRoom = this.subscribeToRoom.bind(this);
@@ -39,9 +40,12 @@ runs after the component is rendered. */
       .then(currentUser => {
           /* take currentUser and hook onto the entire component (this) itself so it is accessible outside this scope */
           this.currentUser = currentUser;
-          let usersonlineobj = this.currentUser.rooms[0].userIds;
-          let usersonline = Object.keys(usersonlineobj).length;
-          console.log(usersonline);
+          let allusersonlineobj = this.currentUser.rooms[0].userIds;
+          let allusersonline = Object.keys(allusersonlineobj).length;
+          // console.log(allusersonline);
+          this.setState({
+            usersonline: allusersonline
+          });
           this.getRooms(this.state.roomId);
           // the user should now be able to click on a room name to subscribeToRoom.
           // this.subscribeToRoom();
@@ -120,6 +124,7 @@ runs after the component is rendered. */
     return (
         <div className="app">
             <RoomList
+                usersonline={this.state.usersonline}
                 subscribeToRoom={this.subscribeToRoom}
                 rooms={[...this.state.joinableRooms, ...this.state.joinedRooms]}
                 roomId={this.state.roomId} />
