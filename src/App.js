@@ -43,22 +43,20 @@ runs after the component is rendered. */
           let allusersonlineobj = this.currentUser.rooms[0].userIds;
           let allusersonline = Object.keys(allusersonlineobj).length;
           // console.log(allusersonline);
-          this.setState({
-            usersonline: allusersonline
-          });
-          this.getRooms(this.state.roomId);
+          this.getRooms(this.state.roomId, allusersonline);
           // the user should now be able to click on a room name to subscribeToRoom.
           // this.subscribeToRoom();
       })
       .catch(err => console.log('Error on connect:', err));
   }
 
-  getRooms(roomId) {
+  getRooms(roomId, usersonline) {
     this.currentUser.getJoinableRooms()
     .then(joinableRooms => {
       this.setState({
         joinableRooms,
         joinedRooms: this.currentUser.rooms,
+        usersonline: usersonline,
         roomId: roomId
       });
       // console.log(this.state.roomId + ' getRooms method');
@@ -94,7 +92,7 @@ runs after the component is rendered. */
             this.setState({
                 roomId: roomId
             })
-            this.getRooms(roomId)
+            this.getRooms(roomId, this.state.usersonline);
         })
         .catch(err => console.log('error on subscribing to room: ', err))
     }
