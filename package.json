@@ -4,11 +4,14 @@
   "private": true,
   "dependencies": {
     "@pusher/chatkit": "^0.7.16",
+    "ajv": "^6.10.0",
+    "extend": "^3.0.2",
     "handlebars": "^4.1.2",
     "js-yaml": "^3.13.1",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
-    "react-scripts": "1.1.4"
+    "react-scripts": "1.1.4",
+    "url-parse": "^1.4.3"
   },
   "scripts": {
     "start": "react-scripts start",
