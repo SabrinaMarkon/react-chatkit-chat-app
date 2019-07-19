@@ -38,6 +38,7 @@ runs after the component is rendered. */
 
     chatManager.connect()
       .then(currentUser => {
+        console.log(currentUser);
           /* take currentUser and hook onto the entire component (this) itself so it is accessible outside this scope */
           this.currentUser = currentUser;
           let allusersonlineobj = this.currentUser.rooms[0].userIds;
@@ -77,10 +78,11 @@ runs after the component is rendered. */
         // console.log(roomId);
         // console.log(typeof roomId);
         // console.log(typeof this.state.roomId)
-        this.currentUser.subscribeToRoom({
+        this.currentUser.subscribeToRoomMultipart({
             roomId: roomId,
             hooks: {
-                onNewMessage: message => {
+                onMessage: message => {
+                  console.log("received message", message);
                     this.setState({
                         messages: [...this.state.messages, message],
                     })
@@ -110,7 +112,7 @@ runs after the component is rendered. */
   }
 
   createRoom(e, name) {
-    // console.log('roomName:' , typeof(name));
+    console.log('roomName:' , typeof(name));
     this.currentUser.createRoom({
       name
     })

@@ -15,7 +15,7 @@ class RoomList extends React.Component {
                         return (
                             <li key={room.id} className={"room " + active}>
                                 {/* We use onClick={() => {}} anonymous function because if we did not have () => {} it would call subscribeToRoom when the component renders instead of when it is clicked. */}
-                        <a onClick={(e) => this.props.subscribeToRoom(e, room.id)} href=""># {room.name}</a>
+                        <button onClick={(e) => this.props.subscribeToRoom(e, room.id)} ># {room.name}</button>
                             </li>
                         )
                     })}
