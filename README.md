@@ -1,1 +1,1 @@
-React practice building a chat app with Pusher.com's Chatkit API
+A React chat app using the Pusher Chatkit API
