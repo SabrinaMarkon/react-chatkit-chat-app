@@ -9,6 +9,7 @@
     "extend": "*",
     "handlebars": "^4.7.6",
     "js-yaml": "*",
+    "node-forge": "^0.10.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-scripts": "^3.4.3",
