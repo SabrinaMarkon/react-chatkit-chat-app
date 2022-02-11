@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@pusher/chatkit": "^0.7.18",
-    "ajv": "^6.10.2",
+    "ajv": "^6.12.3",
     "dot-prop": "^4.2.1",
     "extend": "*",
     "handlebars": "^4.7.7",
